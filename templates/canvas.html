@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
+
 <body>
 
-<h1>HTML5 Canvas - Draw a Rectangle</h1>
+  <h1>HTML5 Canvas - Draw a Rectangle</h1>
 
-<div style="display:none;">
-  <img id="fotogato" src="https://i.pinimg.com/236x/d0/54/b5/d054b516c8575b03a71a23f1a7fa4192.jpg">
-</div>
+  <div style="display:none;">
+    <img id="fotogato" src="https://i.pinimg.com/236x/d0/54/b5/d054b516c8575b03a71a23f1a7fa4192.jpg">
+  </div>
 
-<canvas id="myCanvas" width="300" height="200" style="border:1px solid black;">
-Sorry, your browser does not support canvas.
-</canvas>
+  <canvas id="myCanvas" width="300" height="200" style="border:1px solid black;">
+    Sorry, your browser does not support canvas.
+  </canvas>
 
-<script>
-const canvas = document.getElementById("myCanvas");
-const ctx = canvas.getContext("2d");
-const image = document.getElementById("fotogato");
+  <script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    const image = document.getElementById("fotogato");
 
-image.addEventListener("load", (e) => {
-  ctx.drawImage(image, 0, 0);
+    image.addEventListener("load", (e) => {
+      ctx.drawImage(image, 0, 0);
 
-  ctx.strokeStyle = "red";
+      ctx.strokeStyle = "red";
 
-  ctx.rect(150, 50, 70, 70);
-  ctx.stroke();
-});
-</script>
+      ctx.rect(150, 50, 70, 70);
+      ctx.stroke();
+    });
+  </script>
 
 </body>
+
 </html>
