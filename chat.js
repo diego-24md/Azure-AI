@@ -4,8 +4,8 @@
 */
 /*
 //Datos de Acceso
-const endPointURL = `https://openaiprueba2026.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview`
-const token = `AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy`
+const endPointURL = ``
+const token = ``
 
 async function enviarPregunta(pregunta = '') {
 
@@ -44,8 +44,8 @@ async function enviarPregunta(pregunta = '') {
 enviarPregunta('¿Quién descubrió América?')
 */
 
-const endPointURL = `https://openaiprueba2026.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview`
-const token = `AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy`
+const endPointURL = ``
+const token = ``
 
 const chatMessages = document.getElementById('chatMessages')
 const userInput = document.getElementById('userInput')

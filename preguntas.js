@@ -1,6 +1,6 @@
 /*
-const subscriptionKey = "AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy"
-const endpoint = "https://openaiprueba2026.services.ai.azure.com/"
+const subscriptionKey = ""
+const endpoint = ""
 
 // URL
 const url = `${endpoint}language/:query-text?api-version=2021-10-01`;
@@ -70,8 +70,8 @@ async function responderPreguntas() {
 responderPreguntas();
 */
 
-const subscriptionKey = "AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy"
-const endpoint = "https://openaiprueba2026.services.ai.azure.com/"
+const subscriptionKey = ""
+const endpoint = ""
 
 const url = `${endpoint}/language/:query-text?api-version=2021-10-01`;
 

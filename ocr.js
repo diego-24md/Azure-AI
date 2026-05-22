@@ -67,8 +67,8 @@ async function leerTexto(){
 leerTexto()
 */
 
-const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
-const endpoint = "https://1521552-ai.cognitiveservices.azure.com/"
+const subscriptionKey = ""
+const endpoint = ""
 
 function setStatus(type, msg, spinner) {
   const bar = document.getElementById('statusBar');

@@ -1,8 +1,8 @@
 /*
 //  Configuración
-const AZURE_ENDPOINT = `https://openaiprueba2026.openai.azure.com`
+const AZURE_ENDPOINT = ``
 const DEPLOYMENT_NAME = `gpt-5.4-mini`
-const API_KEY = `AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy`
+const API_KEY = ``
 const API_VERSION = `2025-04-01-preview`
 
 async function preguntarAzure(pregunta = ``, historial = []) {
@@ -77,9 +77,9 @@ async function test() {
 test()
 */
 
-const AZURE_ENDPOINT = `https://openaiprueba2026.openai.azure.com`
+const AZURE_ENDPOINT = `
 const DEPLOYMENT_NAME = `gpt-5.4-mini`
-const API_KEY = `AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy`
+const API_KEY = ``
 const API_VERSION = `2025-04-01-preview`
 
 const chatMessages = document.getElementById('chatMessages')

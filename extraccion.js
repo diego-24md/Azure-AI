@@ -67,9 +67,8 @@ async function extraerDatos() {
 extraerDatos();
 */
 
-const subscriptionKey = "AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy";
-
-const endpoint = "https://openaiprueba2026.services.ai.azure.com/";
+const subscriptionKey = "";
+const endpoint = "";
 
 const url = `${endpoint}language/:analyze-text?api-version=2022-05-01`;
 

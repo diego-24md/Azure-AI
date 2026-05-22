@@ -1,7 +1,7 @@
 /*
 //Estos datos son CONFIDENCIALES (BACKEND)
-const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
-const endpoint = "https://1521552-ai.cognitiveservices.azure.com/"
+const subscriptionKey = ""
+const endpoint = ""
 
 const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Objects`
 const imageURL = `https://static.vecteezy.com/system/resources/previews/035/846/121/non_2x/man-job-entrepreneur-sitting-work-manager-office-modern-person-adult-smart-computer-desk-portrait-photo.jpg`
@@ -47,8 +47,8 @@ async function detectarObjetos(){
 detectarObjetos()
 */
 
-const subscriptionKey = "AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy"
-const endpoint = "https://openaiprueba2026.services.ai.azure.com/"
+const subscriptionKey = ""
+const endpoint = ""
 
 const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Objects`
 

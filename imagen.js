@@ -1,7 +1,7 @@
 /*
 //Detección de imágenes
-const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
-const endpoint = "https://1521552-ai.cognitiveservices.azure.com/"
+const subscriptionKey = ""
+const endpoint = ""
 
 //La URL describe las funcionalidades que deseamos aprovechar
 const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Categories,Description,Color`
@@ -50,8 +50,8 @@ async function analizarImagen(){
 analizarImagen()
 */
 
-const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
-const endpoint = "https://1521552-ai.cognitiveservices.azure.com"
+const subscriptionKey = ""
+const endpoint = ""
 
 const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Categories,Description,Color`
 
