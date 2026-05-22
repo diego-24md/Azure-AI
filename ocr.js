@@ -81,7 +81,7 @@ function setStatus(type, msg, spinner) {
   if (spinner) {
     icon.innerHTML = '<div class="spinner"></div>';
   } else {
-    const icons = { success: '', error: '❌', running: '' };
+    const icons = { success: '', error: '', running: '' };
     icon.textContent = icons[type] || '';
   }
 

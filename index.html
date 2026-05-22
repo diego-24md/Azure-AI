@@ -132,20 +132,18 @@
 
         <nav class="sidebar-menu">
             <div class="menu-label">Visión</div>
-            <a class="menu-item" data-page="ocr.html"><i class="fa-solid fa-file-lines"></i> OCR</a>
-            <a class="menu-item" data-page="imagen.html"><i class="fa-solid fa-image"></i> Análisis de imágenes</a>
-            <a class="menu-item" data-page="deteccion.html"><i class="fa-solid fa-crosshairs"></i> Detección de
-                objetos</a>
-            <a class="menu-item" data-page="extraccion.html"><i class="fa-solid fa-file-export"></i> Extracción</a>
+            <a class="menu-item" href="ocr.html"><i class="fa-solid fa-file-lines"></i> OCR</a>
+            <a class="menu-item" href="imagen.html"><i class="fa-solid fa-image"></i> Análisis de imágenes</a>
+            <a class="menu-item" href="deteccion.html"><i class="fa-solid fa-crosshairs"></i> Detección de objetos</a>
+            <a class="menu-item" href="extraccion.html"><i class="fa-solid fa-file-export"></i> Extracción</a>
 
             <div class="menu-label">Lenguaje</div>
-            <a class="menu-item" data-page="sentimientos.html"><i class="fa-solid fa-face-smile"></i> Sentimientos</a>
-            <a class="menu-item active" data-page="preguntas.html"><i class="fa-solid fa-circle-question"></i>
-                Preguntas</a>
+            <a class="menu-item" href="sentimientos.html"><i class="fa-solid fa-face-smile"></i> Sentimientos</a>
+            <a class="menu-item active" href="preguntas.html"><i class="fa-solid fa-circle-question"></i> Preguntas</a>
 
             <div class="menu-label">IA Generativa</div>
-            <a class="menu-item" data-page="chat.html"><i class="fa-solid fa-comments"></i> Chat</a>
-            <a class="menu-item" data-page="chatgpt.html"><i class="fa-solid fa-robot"></i> ChatGPT</a>
+            <a class="menu-item" href="chat.html"><i class="fa-solid fa-comments"></i> Chat</a>
+            <a class="menu-item" href="chatgpt.html"><i class="fa-solid fa-robot"></i> ChatGPT</a>
         </nav>
 
         <div class="sidebar-footer">
@@ -159,73 +157,6 @@
         <p class="subtitle">Selecciona un servicio de IA para comenzar</p>
     </main>
 
-    <script>
-        const mainContent = document.getElementById('main-content');
-
-        async function loadPage(page) {
-            mainContent.innerHTML = `
-            <div style="text-align:center; padding:80px 20px; color:#666;">
-                <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br>
-                Cargando ${page}...
-            </div>`;
-
-            try {
-                const response = await fetch(page);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                let html = await response.text();
-
-                // Limpieza mejorada: extraer contenido útil
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-
-                // Intentar obtener el contenido del body, si no existe usar todo
-                let content = tempDiv.querySelector('body') ?
-                    tempDiv.querySelector('body').innerHTML :
-                    html;
-
-                // Si no hay contenido útil, usar todo
-                if (!content || content.trim() === '') {
-                    content = html;
-                }
-
-                mainContent.innerHTML = content;
-
-                // Actualizar menú activo
-                document.querySelectorAll('.menu-item').forEach(item => {
-                    item.classList.toggle('active', item.getAttribute('data-page') === page);
-                });
-
-            } catch (error) {
-                console.error(error);
-                mainContent.innerHTML = `
-                <div style="padding:40px;">
-                    <h2 style="color:#e74c3c;">Error al cargar ${page}</h2>
-                    <p>${error.message}</p>
-                    <p style="margin-top:15px; color:#666;">
-                        Verifica que el archivo <strong>${page}</strong> exista en la misma carpeta.
-                    </p>
-                </div>`;
-            }
-        }
-
-        // Event listeners
-        document.querySelectorAll('.menu-item').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const page = link.getAttribute('data-page');
-                if (page) loadPage(page);
-            });
-        });
-
-        // Cargar Preguntas por defecto al abrir
-        window.onload = () => {
-            loadPage('preguntas.html');
-        };
-    </script>
 </body>
 
 </html>
