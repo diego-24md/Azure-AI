@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Azure AI - Servicios</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     <style>
         * {
             box-sizing: border-box;
@@ -77,10 +78,12 @@
             color: #cdd6f4;
             text-decoration: none;
             border-left: 3px solid transparent;
-            transition: background 0.15s, border-color 0.15s;
+            transition: all 0.15s;
+            cursor: pointer;
         }
 
-        .menu-item:hover {
+        .menu-item:hover,
+        .menu-item.active {
             background: #313244;
             border-left-color: #cba6f7;
             color: #fff;
@@ -108,84 +111,13 @@
             margin-left: 260px;
             flex: 1;
             padding: 2.5rem;
+            overflow-y: auto;
         }
 
-        .main h2 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
-        }
-
-        .main p.subtitle {
-            font-size: 14px;
+        .loading {
+            text-align: center;
+            padding: 50px;
             color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .service-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 2rem 1.75rem;
-            text-decoration: none;
-            color: #333;
-            transition: box-shadow 0.2s, transform 0.15s;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .card-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            margin-bottom: 6px;
-        }
-
-        .card-title {
-            font-size: 17px;
-            font-weight: 600;
-        }
-
-        .card-desc {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 20px;
-            width: fit-content;
-        }
-
-        .badge.vision {
-            background: #e6f1fb;
-            color: #185fa5;
-        }
-
-        .badge.language {
-            background: #eafbe5;
-            color: #2e7d32;
-        }
-
-        .badge.generative {
-            background: #f3e8ff;
-            color: #7c3aed;
         }
     </style>
 </head>
@@ -200,31 +132,20 @@
 
         <nav class="sidebar-menu">
             <div class="menu-label">Visión</div>
-            <a class="menu-item" href="ocr.html">
-                <i class="fa-solid fa-file-lines"></i> OCR
-            </a>
-            <a class="menu-item" href="imagen.html">
-                <i class="fa-solid fa-image"></i> Análisis de imágenes
-            </a>
-            <a class="menu-item" href="extraccion.html">
-                <i class="fa-solid fa-file-export"></i> Extracción
-            </a>
+            <a class="menu-item" data-page="ocr.html"><i class="fa-solid fa-file-lines"></i> OCR</a>
+            <a class="menu-item" data-page="imagen.html"><i class="fa-solid fa-image"></i> Análisis de imágenes</a>
+            <a class="menu-item" data-page="deteccion.html"><i class="fa-solid fa-crosshairs"></i> Detección de
+                objetos</a>
+            <a class="menu-item" data-page="extraccion.html"><i class="fa-solid fa-file-export"></i> Extracción</a>
 
             <div class="menu-label">Lenguaje</div>
-            <a class="menu-item" href="sentimientos.html">
-                <i class="fa-solid fa-face-smile"></i> Sentimientos
-            </a>
-            <a class="menu-item" href="preguntas.html">
-                <i class="fa-solid fa-circle-question"></i> Preguntas
-            </a>
+            <a class="menu-item" data-page="sentimientos.html"><i class="fa-solid fa-face-smile"></i> Sentimientos</a>
+            <a class="menu-item active" data-page="preguntas.html"><i class="fa-solid fa-circle-question"></i>
+                Preguntas</a>
 
             <div class="menu-label">IA Generativa</div>
-            <a class="menu-item" href="chat.html">
-                <i class="fa-solid fa-comments"></i> Chat
-            </a>
-            <a class="menu-item" href="chatgpt.html">
-                <i class="fa-solid fa-robot"></i> ChatGPT
-            </a>
+            <a class="menu-item" data-page="chat.html"><i class="fa-solid fa-comments"></i> Chat</a>
+            <a class="menu-item" data-page="chatgpt.html"><i class="fa-solid fa-robot"></i> ChatGPT</a>
         </nav>
 
         <div class="sidebar-footer">
@@ -232,11 +153,79 @@
         </div>
     </aside>
 
-    <main class="main">
+    <main class="main" id="main-content">
+        <!-- El contenido se cargará aquí dinámicamente -->
         <h2>Bienvenido, Diego Alonso V.</h2>
         <p class="subtitle">Selecciona un servicio de IA para comenzar</p>
     </main>
 
+    <script>
+        const mainContent = document.getElementById('main-content');
+
+        async function loadPage(page) {
+            mainContent.innerHTML = `
+            <div style="text-align:center; padding:80px 20px; color:#666;">
+                <i class="fa-solid fa-spinner fa-spin fa-2x"></i><br><br>
+                Cargando ${page}...
+            </div>`;
+
+            try {
+                const response = await fetch(page);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                let html = await response.text();
+
+                // Limpieza mejorada: extraer contenido útil
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                // Intentar obtener el contenido del body, si no existe usar todo
+                let content = tempDiv.querySelector('body') ?
+                    tempDiv.querySelector('body').innerHTML :
+                    html;
+
+                // Si no hay contenido útil, usar todo
+                if (!content || content.trim() === '') {
+                    content = html;
+                }
+
+                mainContent.innerHTML = content;
+
+                // Actualizar menú activo
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.toggle('active', item.getAttribute('data-page') === page);
+                });
+
+            } catch (error) {
+                console.error(error);
+                mainContent.innerHTML = `
+                <div style="padding:40px;">
+                    <h2 style="color:#e74c3c;">Error al cargar ${page}</h2>
+                    <p>${error.message}</p>
+                    <p style="margin-top:15px; color:#666;">
+                        Verifica que el archivo <strong>${page}</strong> exista en la misma carpeta.
+                    </p>
+                </div>`;
+            }
+        }
+
+        // Event listeners
+        document.querySelectorAll('.menu-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                if (page) loadPage(page);
+            });
+        });
+
+        // Cargar Preguntas por defecto al abrir
+        window.onload = () => {
+            loadPage('preguntas.html');
+        };
+    </script>
 </body>
 
 </html>

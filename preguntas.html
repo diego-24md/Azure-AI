@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas y Respuestas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        padding: 30px 15px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 950px;
+        margin: auto;
+    }
+
+    .card {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #1e3a8a;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #222;           /* Negro más oscuro */
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 220px;
+        resize: vertical;
+        padding: 14px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #000;           /* Texto negro */
+        line-height: 1.5;
+    }
+
+    textarea:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #000;           /* Texto negro */
+    }
+
+    input[type="text"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        background: #4a90e2;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        background: #357abd;
+        transform: translateY(-2px);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Resultado */
+    .respuesta {
+        margin: 18px 0;
+        padding: 18px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border-left: 5px solid #22c55e;
+        font-size: 16px;
+        color: #000;               /* Negro fuerte */
+    }
+
+    .confianza {
+        color: #2e7d32;
+        font-weight: bold;
+        margin-top: 12px;
+        font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            padding: 20px;
+        }
+        body {
+            padding: 15px;
+        }
+    }
+</style>
+<body>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>
+                <i class="fa-solid fa-circle-question"></i>
+                Preguntas y Respuestas
+            </h2>
+
+            <label>Texto a analizar</label>
+            <textarea id="contexto"></textarea>
+
+            <label>Pregunta</label>
+            <input type="text" id="pregunta">
+
+            <button onclick="responderPreguntas()">
+                <i class="fa-solid fa-paper-plane"></i>
+                Analizar
+            </button>
+        </div>
+
+        <div id="resultado" class="card hidden">
+            <h3>Resultado</h3>
+
+            <div class="respuesta">
+                <strong>Respuesta:</strong>
+                <p id="respuesta"></p>
+            </div>
+
+            <div class="confianza">
+                <strong>Confianza:</strong>
+                <span id="confianza"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="preguntas.js"></script>
+</body>
+
+</html>

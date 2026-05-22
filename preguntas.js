@@ -1,5 +1,6 @@
-const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
-const endpoint = "https://1521552-ai.cognitiveservices.azure.com/"
+/*
+const subscriptionKey = "AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy"
+const endpoint = "https://openaiprueba2026.services.ai.azure.com/"
 
 // URL
 const url = `${endpoint}language/:query-text?api-version=2021-10-01`;
@@ -67,3 +68,65 @@ async function responderPreguntas() {
 }
 
 responderPreguntas();
+*/
+
+const subscriptionKey = "AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy"
+const endpoint = "https://openaiprueba2026.services.ai.azure.com/"
+
+const url = `${endpoint}/language/:query-text?api-version=2021-10-01`;
+
+async function responderPreguntas() {
+
+    const contexto = document.getElementById("contexto").value.trim();
+    const pregunta = document.getElementById("pregunta").value.trim();
+
+    if (!contexto || !pregunta) {
+        alert("Completa todos los campos");
+        return;
+    }
+
+    const cuerpoPeticion = {
+        question: pregunta,
+        records: [
+            {
+                id: "doc_01",
+                text: contexto
+            }
+        ],
+        language: "es",
+        stringIndexType: "Utf16CodeUnit"
+    };
+
+    try {
+
+        const response = await fetch(url,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Ocp-Apim-Subscription-Key": subscriptionKey
+            },
+            body: JSON.stringify(cuerpoPeticion)
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if(data.answers?.length){
+
+            document.getElementById("resultado")
+                .classList.remove("hidden");
+
+            document.getElementById("respuesta")
+                .textContent = data.answers[0].answer;
+
+            document.getElementById("confianza")
+                .textContent =
+                (data.answers[0].confidenceScore * 100).toFixed(2) + "%";
+        }
+
+    } catch(error){
+        console.error(error);
+        alert(error.message);
+    }
+}
