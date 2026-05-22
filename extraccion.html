@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXTRACCIÓN</title>
+</head>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    padding: 40px;
+}
+
+.contenedor-principal {
+    width: 1100px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 28px;
+    font-weight: 500;
+    color: #0d1117;
+    letter-spacing: 0.05em;
+}
+
+.panel {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.lado-izquierdo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.bloque-texto {
+    background: white;
+    border: 0.5px solid #d0d7de;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+#textoEntrada {
+    width: 100%;
+    height: 220px;
+    border: 0.5px solid #d0d7de;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 15px;
+    resize: none;
+    outline: none;
+    background: #f8fafc;
+    color: #0d1117;
+    line-height: 1.6;
+    transition: border-color 0.15s;
+}
+
+#textoEntrada:focus {
+    border-color: #0C447C;
+    background: white;
+}
+
+.bloque-tabla {
+    background: white;
+    border: 0.5px solid #d0d7de;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.tabla-resultados {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-resultados th {
+    font-size: 11px;
+    font-weight: 500;
+    color: #6e7781;
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 0.5px solid #d0d7de;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tabla-resultados td {
+    font-size: 15px;
+    color: #0d1117;
+    padding: 14px 12px;
+    border-bottom: 0.5px solid #eaeef2;
+}
+
+.tabla-resultados tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-resultados tbody tr:hover td {
+    background: #f8fafc;
+}
+
+.lado-derecho {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.bloque-boton {
+    background: white;
+    border: 0.5px solid #d0d7de;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+#btnAnalizar {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    background: #185FA5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+}
+
+#btnAnalizar:hover {
+    background: #0C447C;
+}
+
+.bloque-categorias {
+    background: white;
+    border: 0.5px solid #d0d7de;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.bloque-categorias h3 {
+    margin-bottom: 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6e7781;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.categorias {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.categorias label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #0d1117;
+    cursor: pointer;
+}
+
+.categorias input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: #0C447C;
+}
+</style>
+<body>
+    <div class="contenedor-principal">
+        <h1>EXTRACCIÓN</h1>
+        <div class="panel">
+            <!-- IZQUIERDA -->
+            <div class="lado-izquierdo">
+
+                <div class="bloque-texto">
+                    <textarea id="textoEntrada" placeholder="Ingrese un texto..."></textarea>
+                </div>
+                <div class="bloque-tabla">
+                    <table class="tabla-resultados">
+                        <thead>
+                            <tr>
+                                <th>Texto</th>
+                                <th>Categoría</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyResultados"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- DERECHA -->
+            <div class="lado-derecho">
+                <div class="bloque-boton">
+                    <button id="btnAnalizar">
+                        Analizar
+                    </button>
+                </div>
+                <div class="bloque-categorias">
+                    <h3>Categorías</h3>
+                    <div class="categorias">
+                        <label>
+                            <input type="checkbox" value="DateTime" checked>
+                            DateTime
+                        </label>
+                        <label>
+                            <input type="checkbox" value="Organization">
+                            Organization
+                        </label>
+                        <label>
+                            <input type="checkbox" value="PersonType">
+                            PersonType
+                        </label>
+                        <label>
+                            <input type="checkbox" value="Location" checked>
+                            Location
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="extraccion.js"></script>
+</body>       
+</html>

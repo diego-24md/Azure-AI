@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Sentimientos</title>
+
+    <link rel="stylesheet" href="preguntas.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f5f7fa;
+        color: #1e293b;
+        padding: 40px;
+    }
+
+    /* CONTENEDOR */
+    .contenedor-principal {
+        max-width: 1250px;
+        margin: auto;
+    }
+
+    /* TÍTULO */
+    h1 {
+        font-size: 34px;
+        font-weight: 600;
+        margin-bottom: 35px;
+        color: #0f172a;
+    }
+
+    /* LAYOUT */
+    .panel {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 24px;
+        align-items: start;
+    }
+
+    /* IZQUIERDA */
+    .lado-izquierdo {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* TARJETAS */
+    .bloque-texto,
+    .bloque-tabla,
+    .bloque-boton,
+    .bloque-categorias {
+        background: white;
+        border: 1px solid #dbe3ec;
+        border-radius: 10px;
+    }
+
+    /* ÁREA DE TEXTO */
+    .bloque-texto {
+        padding: 22px;
+    }
+
+    #textoEntrada {
+        width: 100%;
+        height: 260px;
+        border: 1px solid #cfd8e3;
+        border-radius: 8px;
+        resize: none;
+        padding: 16px;
+        font-size: 16px;
+        line-height: 1.6;
+        outline: none;
+        background: white;
+        color: #334155;
+    }
+
+    #textoEntrada:focus {
+        border-color: #3b82f6;
+    }
+
+    /* TABLA */
+    .bloque-tabla {
+        padding: 18px;
+    }
+
+    .tabla-resultados {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .tabla-resultados thead {
+        background: #f8fafc;
+    }
+
+    .tabla-resultados th {
+        padding: 15px;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 600;
+        color: #0f172a;
+        border-bottom: 1px solid #dbe3ec;
+    }
+
+    .tabla-resultados td {
+        padding: 15px;
+        font-size: 15px;
+        border-bottom: 1px solid #eef2f7;
+        color: #334155;
+    }
+
+    .tabla-resultados tbody tr:hover {
+        background: #fafcff;
+    }
+
+    /* DERECHA */
+    .lado-derecho {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    /* BOTÓN */
+    .bloque-boton {
+        padding: 20px;
+    }
+
+    #btnAnalizar {
+        width: 100%;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    #btnAnalizar:hover {
+        background: #1d4ed8;
+    }
+
+    /* PANEL INFO */
+    .bloque-categorias {
+        padding: 22px;
+    }
+
+    .bloque-categorias h3 {
+        font-size: 18px;
+        margin-bottom: 18px;
+        color: #0f172a;
+    }
+
+    /* LISTA */
+    .categorias {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .categorias label {
+        font-size: 15px;
+        color: #475569;
+        line-height: 1.5;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1000px) {
+
+        .panel {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media(max-width:700px) {
+
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        #textoEntrada {
+            height: 220px;
+        }
+
+        .tabla-resultados th,
+        .tabla-resultados td {
+            padding: 12px;
+            font-size: 14px;
+        }
+    }
+</style>
+
+<body>
+
+    <div class="contenedor-principal">
+
+        <h1>ANÁLISIS DE SENTIMIENTOS</h1>
+
+        <div class="panel">
+
+            <!-- IZQUIERDA -->
+            <div class="lado-izquierdo">
+
+                <!-- TEXTO -->
+                <div class="bloque-texto">
+
+                    <textarea id="textoEntrada" placeholder="Escribe un texto para analizar sentimientos..."></textarea>
+
+                </div>
+
+                <!-- TABLA -->
+                <div class="bloque-tabla">
+
+                    <table class="tabla-resultados">
+
+                        <thead>
+                            <tr>
+                                <th>Texto</th>
+                                <th>Sentimiento</th>
+                                <th>Confianza</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tbodyResultados">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- DERECHA -->
+            <div class="lado-derecho">
+
+                <!-- BOTÓN -->
+                <div class="bloque-boton">
+
+                    <button id="btnAnalizar">
+                        Analizar
+                    </button>
+
+                </div>
+
+                <!-- INFO -->
+                <div class="bloque-categorias">
+
+                    <h3>Información</h3>
+
+                    <div class="categorias">
+
+                        <label>
+                            • Detecta sentimientos positivos
+                        </label>
+
+                        <label>
+                            • Detecta sentimientos negativos
+                        </label>
+
+                        <label>
+                            • Detecta sentimientos neutros
+                        </label>
+
+                        <label>
+                            • Analiza cada oración
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="preguntas.js"></script>
+
+</body>
+
+</html>

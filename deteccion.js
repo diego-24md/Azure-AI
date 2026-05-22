@@ -1,5 +1,5 @@
 //Estos datos son CONFIDENCIALES (BACKEND)
-const suscriptionKey = ""
+  const suscriptionKey = ""
 const endpoint = ""
 
 const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Objects`
