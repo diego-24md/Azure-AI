@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure - Análisis de Imágenes</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        color: #333;
+        padding: 2rem;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .header {
+        margin-bottom: 1.5rem;
+    }
+
+    .header h2 {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .header p {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
+    }
+
+    .card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .field {
+        margin-bottom: 1rem;
+    }
+
+    .field:last-child {
+        margin-bottom: 0;
+    }
+
+    label {
+        display: block;
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 6px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 9px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #4a90e2;
+    }
+
+    button#analyzeBtn {
+        width: 100%;
+        padding: 10px;
+        background-color: #4a90e2;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    button#analyzeBtn:hover {
+        background-color: #357abd;
+    }
+
+    button#analyzeBtn:disabled {
+        background-color: #a0c4f1;
+        cursor: not-allowed;
+    }
+
+    .status-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border: 1px solid #e0e0e0;
+        background: #f9f9f9;
+        color: #555;
+    }
+
+    .status-bar.running {
+        border-color: #b5d4f4;
+        background: #e6f1fb;
+        color: #185fa5;
+    }
+
+    .status-bar.success {
+        border-color: #b7e0a0;
+        background: #eafbe5;
+        color: #2e7d32;
+    }
+
+    .status-bar.error {
+        border-color: #f7c1c1;
+        background: #fcebeb;
+        color: #a32d2d;
+    }
+
+    .spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    #previewImg {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .result-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .result-row:last-child {
+        border-bottom: none;
+    }
+
+    .result-label {
+        font-size: 13px;
+        color: #555;
+        font-weight: 500;
+        min-width: 150px;
+    }
+
+    .result-value {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .tag {
+        background: #e6f1fb;
+        color: #185fa5;
+        font-size: 12px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        border: 1px solid #b5d4f4;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Azure Image Analysis</h2>
+            <p>Descripción, etiquetas y colores de cualquier imagen</p>
+        </div>
+        <div class="card">
+            <div class="field">
+                <label for="imageUrl">URL de la imagen</label>
+                <input type="text" id="imageUrl"
+                    value="https://img.magnific.com/fotos-premium/amigos-felices-corriendo-campo-contra-arboles_7186-4118.jpg" />
+            </div>
+            <button id="analyzeBtn" onclick="analizarImagen()">Analizar imagen</button>
+        </div>
+        <div id="statusBar" class="status-bar hidden">
+            <span id="statusIcon"></span>
+            <span id="statusMsg"></span>
+        </div>
+        <div id="resultSection" class="hidden">
+            <div class="card">
+                <div class="field">
+                    <label>Vista previa</label>
+                    <img id="previewImg" src="" alt="Vista previa" />
+                </div>
+            </div>
+            <div class="card">
+                <div class="result-row">
+                    <span class="result-label">Descripción</span>
+                    <span id="descripcion" class="result-value"></span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Confianza</span>
+                    <span id="confianza" class="result-value"></span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Color dominante</span>
+                    <span id="color" class="result-value"></span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Etiquetas</span>
+                    <div id="etiquetas" class="tags-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="imagen.js"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+/*
 //Detección de imágenes
 const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
 const endpoint = "https://1521552-ai.cognitiveservices.azure.com/"
@@ -47,3 +48,86 @@ async function analizarImagen(){
 }
 
 analizarImagen()
+*/
+
+const subscriptionKey = "CK7SNr3nyrpKOauqWoX2QlZFby8Rq4Obe3TNW7px1gJizBrSpvAGJQQJ99CEACYeBjFXJ3w3AAAFACOGcbht"
+const endpoint = "https://1521552-ai.cognitiveservices.azure.com"
+
+const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Categories,Description,Color`
+
+function setStatus(type, msg, spinner) {
+  const bar = document.getElementById('statusBar')
+  const icon = document.getElementById('statusIcon')
+  const msgEl = document.getElementById('statusMsg')
+
+  bar.className = 'status-bar ' + type
+  bar.classList.remove('hidden')
+
+  if (spinner) {
+    icon.innerHTML = '<div class="spinner"></div>'
+  } else {
+    const icons = { success: '', error: '', running: '' }
+    icon.textContent = icons[type] || ''
+  }
+
+  msgEl.textContent = msg
+}
+
+async function analizarImagen() {
+  const imageUrl = document.getElementById('imageUrl').value.trim()
+  const btn = document.getElementById('analyzeBtn')
+  const resultSection = document.getElementById('resultSection')
+
+  if (!imageUrl) {
+    setStatus('error', 'Ingresa la URL de una imagen.', false)
+    return
+  }
+
+  btn.disabled = true
+  resultSection.classList.add('hidden')
+  setStatus('running', 'Analizando imagen…', true)
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Ocp-Apim-Subscription-Key': subscriptionKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ url: imageUrl })
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.error?.message || `HTTP ${response.status}`)
+    }
+
+    const data = await response.json()
+    const confianza = (data.description.captions[0].confidence * 100).toFixed(2)
+    const descripcion = data.description.captions[0].text
+    const etiquetas = data.description.tags
+    const colorDominante = data.color.dominantColors[0] || 'N/A'
+
+    document.getElementById('previewImg').src = imageUrl
+    document.getElementById('descripcion').textContent = descripcion
+    document.getElementById('confianza').textContent = `${confianza}%`
+    document.getElementById('color').textContent = colorDominante
+
+    const tagsContainer = document.getElementById('etiquetas')
+    tagsContainer.innerHTML = ''
+    etiquetas.forEach(tag => {
+      const span = document.createElement('span')
+      span.className = 'tag'
+      span.textContent = tag
+      tagsContainer.appendChild(span)
+    })
+
+    resultSection.classList.remove('hidden')
+    setStatus('success', 'Análisis completado.', false)
+
+  } catch (e) {
+    setStatus('error', 'Error: ' + e.message, false)
+  } finally {
+    btn.disabled = false
+  }
+}
