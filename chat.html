@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat con Phi-4</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<style>
+    /* ========= RESET ========= */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ========= BODY ========= */
+    body {
+        font-family: 'Inter', sans-serif;
+
+        background:
+            radial-gradient(circle at top, #1a1a1a 0%, #0b0b0b 70%);
+
+        color: white;
+
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        overflow: hidden;
+    }
+
+    /* ========= CHAT CONTAINER ========= */
+    .chat-container {
+        width: 720px;
+        height: 88vh;
+
+        background: rgba(18, 18, 18, 0.75);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        backdrop-filter: blur(20px);
+
+        border-radius: 26px;
+
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+
+        box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.02),
+            0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ========= HEADER ========= */
+    .chat-header {
+        height: 72px;
+
+        padding: 0 24px;
+
+        display: flex;
+        align-items: center;
+        gap: 14px;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* LOGO CIRCLE */
+    .chat-header::before {
+        content: "";
+
+        width: 11px;
+        height: 11px;
+
+        border-radius: 50%;
+
+        background: #ffffff;
+
+        opacity: 0.9;
+
+        box-shadow:
+            0 0 18px rgba(255, 255, 255, 0.7);
+    }
+
+    .chat-header h1 {
+        font-size: 0.95rem;
+
+        font-weight: 500;
+
+        letter-spacing: 0.4px;
+
+        color: rgba(255, 255, 255, 0.92);
+    }
+
+    /* ========= MESSAGES ========= */
+    .chat-messages {
+        flex: 1;
+
+        padding: 28px;
+
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 20px;
+
+        scroll-behavior: smooth;
+    }
+
+    /* SCROLL */
+    .chat-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+    }
+
+    /* ========= MESSAGE ========= */
+    .message {
+        max-width: 78%;
+
+        padding: 16px 18px;
+
+        border-radius: 20px;
+
+        line-height: 1.7;
+
+        font-size: 0.95rem;
+
+        animation: fadeIn 0.25s ease;
+    }
+
+    /* ========= USER ========= */
+    .user-message {
+        align-self: flex-end;
+
+        background: rgba(255, 255, 255, 0.08);
+
+        border: 1px solid rgba(255, 255, 255, 0.04);
+
+        color: white;
+
+        border-bottom-right-radius: 8px;
+    }
+
+    /* ========= BOT ========= */
+    .bot-message {
+        align-self: flex-start;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.04);
+
+        color: rgba(255, 255, 255, 0.88);
+
+        border-bottom-left-radius: 8px;
+
+        backdrop-filter: blur(10px);
+    }
+
+    /* ========= LOADING ========= */
+    .loading-message {
+        align-self: flex-start;
+
+        background: rgba(255, 255, 255, 0.025);
+
+        border: 1px solid rgba(255, 255, 255, 0.03);
+
+        color: rgba(255, 255, 255, 0.45);
+
+        font-style: italic;
+    }
+
+    /* ========= INPUT AREA ========= */
+    .chat-input-area {
+        padding: 18px 22px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 14px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* ========= INPUT ========= */
+    .chat-input-area input {
+        flex: 1;
+
+        height: 54px;
+
+        border: none;
+
+        border-radius: 18px;
+
+        padding: 0 18px;
+
+        background: rgba(255, 255, 255, 0.045);
+
+        color: white;
+
+        font-size: 0.95rem;
+
+        outline: none;
+
+        transition: 0.2s ease;
+    }
+
+    /* INPUT FOCUS */
+    .chat-input-area input:focus {
+        background: rgba(255, 255, 255, 0.06);
+
+        box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .chat-input-area input::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ========= BUTTON ========= */
+    .chat-input-area button {
+        width: 54px;
+        height: 54px;
+
+        border: none;
+
+        border-radius: 18px;
+
+        background: rgba(255, 255, 255, 0.08);
+
+        color: white;
+
+        font-size: 1rem;
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* HOVER */
+    .chat-input-area button:hover {
+        background: rgba(255, 255, 255, 0.14);
+
+        transform: translateY(-1px);
+    }
+
+    /* DISABLED */
+    .chat-input-area button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    /* ========= ANIMATION ========= */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Chat con Phi-4</h1>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <span>¡Hola! Soy Phi-4. ¿En qué puedo ayudarte?</span>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="Escribe tu pregunta aquí..." onkeydown="handleKey(event)" />
+            <button onclick="enviar()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12L13 4M13 4H7M13 4V10" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+
+</html>
