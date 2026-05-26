@@ -77,7 +77,7 @@ async function test() {
 test()
 */
 
-const AZURE_ENDPOINT = `
+const AZURE_ENDPOINT = ``
 const DEPLOYMENT_NAME = `gpt-5.4-mini`
 const API_KEY = ``
 const API_VERSION = `2025-04-01-preview`
