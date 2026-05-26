@@ -77,9 +77,9 @@ async function test() {
 test()
 */
 
-const AZURE_ENDPOINT = `AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy`
+const AZURE_ENDPOINT = `https://openaiprueba2026.services.ai.azure.com`
 const DEPLOYMENT_NAME = `gpt-5.4-mini`
-const API_KEY = `https://openaiprueba2026.services.ai.azure.com/`
+const API_KEY = `AaMI7X1JC0c1DpJfPiOFBfCtZCntyo7sSgwMciDoUGzWiEubXxoNJQQJ99CEACYeBjFXJ3w3AAAAACOGyJwy`
 const API_VERSION = `2025-04-01-preview`
 
 const chatMessages = document.getElementById('chatMessages')
